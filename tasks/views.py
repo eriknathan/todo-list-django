@@ -1,14 +1,21 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Task
 
 
 # Create your views here.
+def taskList(request):
+    tasks = Task.objects.all()
+    return render(request, 'tasks/list.html', {'tasks': tasks})
+
+
+def taskView(request, id):
+    task = get_object_or_404(Task, pk=id)
+    return render(request, 'tasks/task.html', {'task': task})
+
+
 def helloworld(request):
     return HttpResponse('Hello World!')
-
-
-def taskList(request):
-    return render(request, 'tasks/list.html')
 
 
 def yourName(request, name):
